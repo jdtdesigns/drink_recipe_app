@@ -1,8 +1,14 @@
+import axios from 'axios';
+
 function Register() {
   return (
-    <main>
+    <form>
       <h1>Register</h1>
-    </main>
+      <input type="text" placeholder="Enter your desired username" />
+      <input type="email" placeholder="Enter your desired email address" />
+      <input type="password" placeholder="Enter your desired password" />
+      <button>Submit</button>
+    </form>
   )
 }
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import axios from 'axios';
 
 import Landing from './pages/Landing';
@@ -21,9 +21,9 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Landing />} />
-        {user && <Route path="/dashboard" element={<Dashboard />} />}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate to="/" />} />
+        <Route path="/login" element={!user ? <Login /> : <Navigate to="/dashboard" />} />
+        <Route path="/register" element={!user ? <Register /> : <Navigate to="/dashboard" />} />
       </Routes>
     </>
   );
