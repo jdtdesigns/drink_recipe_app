@@ -97,15 +97,15 @@ router.post('/drink', isAuthenticated, async (req, res) => {
       user: user_id
     });
 
-    await User.findOneAndUpdate({
+    const user = await User.findOneAndUpdate({
       _id: user_id
     }, {
       '$push': {
         favorites: drink._id
       }
-    });
-
-    res.send(drink);
+    }, { new: true }).populate('favorites');
+    console.log(user);
+    res.send({ user });
   } catch (err) {
     res.status(500).send({ error: err });
   }

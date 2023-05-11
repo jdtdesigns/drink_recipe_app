@@ -9,9 +9,9 @@ router.post('/register', async (req, res) => {
 
     req.session.user_id = user._id; // Logging the user in
 
-    res.send(user.select('-password'));
+    res.send({ user });
   } catch (err) {
-    res.status(402).send({ error: err });
+    res.status(403).send({ error: err.message });
   }
 });
 
@@ -19,7 +19,7 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
   const user = await User.findOne({
     email: req.body.email
-  });
+  }).populate('favorites');
 
   // If no user is found, stop and send an error message
   if (!user) return res.status(402).send({ error: 'User with that email not found.' });
@@ -32,7 +32,7 @@ router.post('/login', async (req, res) => {
   // Log the user in
   req.session.user_id = user._id; // Logging the user in
 
-  res.send(user.select('-password'));
+  res.send({ user: user });
 });
 
 // Log out User
@@ -51,7 +51,7 @@ router.get('/authenticated', async (req, res) => {
 
   const user = await User.findById(user_id).populate('favorites');
 
-  res.send({ user: user.select('-password') });
+  res.send({ user: user });
 });
 
 module.exports = router;

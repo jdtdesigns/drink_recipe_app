@@ -32,6 +32,12 @@ const userSchema = new Schema({
   ]
 });
 
+userSchema.methods.toJSON = function () {
+  const user = this.toObject();
+  delete user.password;
+  return user;
+}
+
 userSchema.pre('save', async function (next) {
   if (this.isNew || this.isModified('password')) {
     const encrypted_password = await bcrypt.hash(this.password, 10);
