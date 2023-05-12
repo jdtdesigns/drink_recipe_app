@@ -1,0 +1,28 @@
+type Drink {
+  name: String
+  category: String
+  ingredients: String
+  instructions: String
+  user: ID
+}
+
+type User {
+  _id: String
+  username: String
+  email: String
+  favorites: [Drink]
+}
+
+type MessageResponse {
+  message: String
+}
+
+type Query {
+  logout: MessageResponse
+  authenticated: User
+}
+
+type Mutation {
+  register(username: String!, email: String!, password: String!): User
+  login(email: String!, password: String!): User
+}

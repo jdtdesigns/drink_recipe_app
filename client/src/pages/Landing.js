@@ -5,19 +5,19 @@ function Landing({ user }) {
   const [drinks, setDrinks] = useState([]);
 
   useEffect(() => {
-    axios.get('/api/drinks')
-      .then(({ data }) => {
+    // axios.get('/api/drinks')
+    //   .then(({ data }) => {
 
-        if (user) {
-          const drink_ids = user.favorites.map(fav => fav._id);
-          const filtered = data.map(drink => ({
-            ...drink,
-            favorited: drink_ids.includes(drink._id)
-          }));
+    //     if (user) {
+    //       const drink_ids = user.favorites.map(fav => fav._id);
+    //       const filtered = data.map(drink => ({
+    //         ...drink,
+    //         favorited: drink_ids.includes(drink._id)
+    //       }));
 
-          setDrinks(filtered);
-        } else setDrinks(data);
-      });
+    //       setDrinks(filtered);
+    //     } else setDrinks(data);
+    //   });
   }, [user]);
 
   const saveFavorite = async (drink) => {

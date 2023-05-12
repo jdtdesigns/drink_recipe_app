@@ -1,5 +1,13 @@
 import { useState } from 'react';
-import axios from 'axios';
+import { useMutation, gql } from '@apollo/client';
+
+const GET_DRINKS = gql`
+  query {
+    getDrinks() {
+      
+    }
+  }
+`;
 
 function Dashboard(props) {
   const [errorMessage, setErrorMessage] = useState('');
@@ -22,7 +30,7 @@ function Dashboard(props) {
     e.preventDefault();
 
     try {
-      const res = await axios.post('/api/drink', formData);
+
 
       props.setUser(res.data.user);
       setFormData({

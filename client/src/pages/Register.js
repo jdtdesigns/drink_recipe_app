@@ -1,13 +1,25 @@
 import { useState } from 'react';
-import axios from 'axios';
+import { useMutation, gql } from '@apollo/client';
 
-function Register(props) {
+const REGISTER_USER = gql`
+  mutation Register($username: String!, $email: String!, $password: String!) {
+    register(username: $username, email: $email, password: $password) {
+      _id
+      username
+      email
+      blah
+    }
+  }
+`;
+
+function Register({ setUser }) {
   const [formData, setFormData] = useState({
     username: '',
     email: '',
     password: ''
   });
   const [errorMessage, setErrorMessage] = useState('');
+  const [registerUser, { error }] = useMutation(REGISTER_USER);
 
   const handleInputChange = (e) => {
     const prop = e.target.name;
@@ -22,14 +34,14 @@ function Register(props) {
     e.preventDefault();
 
     try {
-      const res = await axios.post('/auth/register', formData);
+      const { data: { register: user } } = await registerUser({
+        variables: formData
+      });
 
-      props.setUser(res.data.user);
+      setUser(user);
       setErrorMessage('');
     } catch (err) {
-      const message = err.response.data.error;
-
-      setErrorMessage(message);
+      setErrorMessage(err.message);
     }
   }
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
 
 import Header from './components/Header';
 import Landing from './pages/Landing';
@@ -12,10 +12,10 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    axios.get('/auth/authenticated')
-      .then(res => {
-        setUser(res.data.user);
-      })
+    // axios.get('/auth/authenticated')
+    //   .then(res => {
+    //     setUser(res.data.user);
+    //   })
   }, []);
 
   return (
