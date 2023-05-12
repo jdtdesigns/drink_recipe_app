@@ -15,11 +15,15 @@ app.use(express.json());
 
 app.use(express.static('../client/build'));
 
+if (is_prod) {
+  app.enable('trust proxy');
+}
+
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
-  // cookie: { secure: process.env.PORT ? true : false }
+  cookie: { secure: process.env.PORT ? true : false }
 }));
 
 app.use('/api', api_routes);
