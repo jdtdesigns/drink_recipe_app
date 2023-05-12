@@ -11,7 +11,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use(express.static('../client/dist'));
+app.use(express.static('../client/build'));
 
 app.use(session({
   secret: process.env.SESSION_SECRET,
