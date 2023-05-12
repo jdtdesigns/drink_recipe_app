@@ -13,7 +13,7 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    axios.get('/auth/authenticated')
+    axios.get('/auth/authenticated', { withCredentials: true })
       .then(res => {
         setUser(res.data.user);
       })
