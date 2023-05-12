@@ -22,7 +22,7 @@ router.post('/login', async (req, res) => {
   }).populate('favorites');
 
   // If no user is found, stop and send an error message
-  if (!user) return res.status(402).send({ error: 'User with that email not found.' });
+  if (!user) return res.status(402).send({ error: 'User with that email not found. Please register.' });
 
   // If password does not match, stop and send an error message
   const valid_password = await user.validatePass(req.body.password);

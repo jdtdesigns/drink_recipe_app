@@ -38,7 +38,7 @@ function Dashboard(props) {
 
   return (
     <main>
-      <h1>Welcome, {props.user.username}!</h1>
+      <h1 className="text-center">Welcome, {props.user.username}!</h1>
 
       <form onSubmit={handleSubmit}>
         <h2>Add a drink</h2>
@@ -73,7 +73,7 @@ function Dashboard(props) {
         <button>Save Drink</button>
       </form>
 
-      {props.user && props.user.favorites.length && <p>Here are your stored favorite drinks:</p>}
+      {props.user && props.user.favorites.length && <h2 className="text-center">Favorites</h2>}
 
       <div className="favorites">
         {props.user.favorites.map(fav => (

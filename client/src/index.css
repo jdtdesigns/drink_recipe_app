@@ -24,6 +24,42 @@ code {
     monospace;
 }
 
+button {
+  cursor: pointer;
+  padding: 6px 0;
+  border: none;
+  background-color: #777;
+  color: #fff;
+}
+
+button:disabled {
+  background: #ccc;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 3%;
+}
+
+header .logo {
+  text-decoration: none;
+  color: #000;
+}
+
+header nav *:not(:last-child) {
+  margin-right: 8px;
+}
+
+header nav a {
+  color: #000;
+  text-decoration: none;
+}
+
+header nav a.active {
+  text-decoration: underline;
+}
 
 form {
   width: 350px;
@@ -53,6 +89,38 @@ form button {
   border: none;
   font-size: 1rem;
 }
+
+.text-center {
+  text-align: center;
+}
+
+/* Custom Styles */
+.hero {
+  background-color: #999;
+  padding: 20px 0;
+  color: #fff;
+}
+
+.hero p {
+  font-size: 1.1rem;
+
+}
+
+.drinks {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  padding: 25px 3%;
+}
+
+.drink {
+  padding: 8px;
+  border: 1px solid #aaa;
+  display: flex;
+  flex-direction: column;
+}
+
+
 
 .favorites {
   display: grid;

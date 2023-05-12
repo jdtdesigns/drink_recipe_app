@@ -12,21 +12,15 @@ function isAuthenticated(req, res, next) {
 // Get all drinks or get drinks based on search query
 router.get('/drinks', async (req, res) => {
   let drinks;
-  const search = req.params.query.search;
+  const search = req.query.search;
 
   if (search) {
     drinks = await Drink.find({
       '$regex': search,
       '$options': 'i'
-    }).populate({
-      path: 'user',
-      select: '-password'
-    });
+    }).populate('user');
   } else {
-    drinks = await Drink.find().populate({
-      path: 'user',
-      select: '-password'
-    });
+    drinks = await Drink.find().populate('user');
   }
 
   res.send(drinks);
