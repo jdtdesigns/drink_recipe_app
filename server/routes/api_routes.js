@@ -11,17 +11,7 @@ function isAuthenticated(req, res, next) {
 
 // Get all drinks or get drinks based on search query
 router.get('/drinks', async (req, res) => {
-  let drinks;
-  const search = req.query.search;
-
-  if (search) {
-    drinks = await Drink.find({
-      '$regex': search,
-      '$options': 'i'
-    }).populate('user');
-  } else {
-    drinks = await Drink.find().populate('user');
-  }
+  const drinks = await Drink.find().populate('user');
 
   res.send(drinks);
 });
@@ -54,15 +44,15 @@ router.put('/drink/:id', isAuthenticated, async (req, res) => {
   if (!drink) return res.status(404).send({ error: 'No drink found by that id.' });
 
   try {
-    await User.findOneAndUpdate({
+    const user = await User.findOneAndUpdate({
       _id: req.session.user_id
     }, {
       $addToSet: {
         favorites: drink._id
       }
-    });
+    }, { new: true }).populate('favorites');
 
-    res.send({ message: 'Drink favorited successfully!' });
+    res.send({ user: user });
   } catch (err) {
     res.status(500).send({ error: err });
   }
@@ -98,7 +88,6 @@ router.post('/drink', isAuthenticated, async (req, res) => {
         favorites: drink._id
       }
     }, { new: true }).populate('favorites');
-    console.log(user);
     res.send({ user });
   } catch (err) {
     res.status(500).send({ error: err });

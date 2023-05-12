@@ -113,6 +113,20 @@ header nav a:hover {
   padding: 8px;
 }
 
+.search-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.search-wrap .search-input {
+  width: 250px;
+  border-radius: 5px;
+  border: 1px solid #aaa;
+  padding: 5px 10px;
+  outline: none;
+}
+
 .drinks .drink button:disabled {
   background-color: #ddd;
 }
