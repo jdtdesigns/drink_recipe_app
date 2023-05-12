@@ -12,21 +12,15 @@ function isAuthenticated(req, res, next) {
 // Get all drinks or get drinks based on search query
 router.get('/drinks', async (req, res) => {
   let drinks;
-  const search = req.params.query.search;
+  const search = req.query.search;
 
   if (search) {
     drinks = await Drink.find({
       '$regex': search,
       '$options': 'i'
-    }).populate({
-      path: 'user',
-      select: '-password'
-    });
+    }).populate('user');
   } else {
-    drinks = await Drink.find().populate({
-      path: 'user',
-      select: '-password'
-    });
+    drinks = await Drink.find().populate('user');
   }
 
   res.send(drinks);
@@ -75,16 +69,16 @@ router.put('/drink/:id', isAuthenticated, async (req, res) => {
 });
 
 // Delete a favorite for a user
-router.put('/drink/:id', isAuthenticated, async (req, res) => {
-  await User.findOneAndUpdate({
+router.put('/fav/:id', isAuthenticated, async (req, res) => {
+  const user = await User.findOneAndUpdate({
     _id: req.session.user_id
   }, {
     '$pull': {
       favorites: req.params.id
     }
-  });
+  }, { new: true }).populate('favorites');
 
-  res.send({ message: 'Favorite removed successfully!' });
+  res.send({ user: user });
 });
 
 // Create a drink
