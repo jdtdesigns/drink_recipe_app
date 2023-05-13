@@ -18,10 +18,7 @@ router.get('/drinks', async (req, res) => {
 
 // Get one drink by id
 router.get('/drink/:id', async (req, res) => {
-  const drink = await Drink.findById(req.params.id).populate({
-    path: 'user',
-    select: '-password'
-  });
+  const drink = await Drink.findById(req.params.id).populate('user');
 
   res.send({ drink: drink });
 });
@@ -50,7 +47,10 @@ router.put('/drink/:id', isAuthenticated, async (req, res) => {
       $addToSet: {
         favorites: drink._id
       }
-    }, { new: true }).populate('favorites');
+    }, { new: true }).populate({
+      path: 'favorites',
+      populate: 'user'
+    });
 
     res.send({ user: user });
   } catch (err) {
@@ -66,7 +66,10 @@ router.put('/fav/:id', isAuthenticated, async (req, res) => {
     '$pull': {
       favorites: req.params.id
     }
-  }, { new: true }).populate('favorites');
+  }, { new: true }).populate({
+    path: 'favorites',
+    populate: 'user'
+  });
 
   res.send({ user: user });
 });
