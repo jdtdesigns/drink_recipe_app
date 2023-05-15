@@ -11,6 +11,12 @@ type Drink {
   user: User
 }
 
+type TestQueryResponse {
+  word: String
+  number: Int
+}
+
 type Query {
   getDrinks: [Drink]
+  testQuery(word: String!, number: Int!): TestQueryResponse
 }
