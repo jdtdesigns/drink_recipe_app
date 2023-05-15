@@ -3,9 +3,11 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 
+import { BrowserRouter } from 'react-router-dom';
+
+// GraphQL imports
 import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink } from '@apollo/client';
 import { onError } from "@apollo/client/link/error";
-import { BrowserRouter } from 'react-router-dom';
 
 const httpLink = new HttpLink({
   uri: 'http://localhost:3333'
@@ -22,6 +24,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError) console.log(`[Network error]: ${networkError}`);
 });
 
+// Create the client context to be passed down to all child components - <App /> and down
 const client = new ApolloClient({
   link: errorLink.concat(httpLink),
   cache: new InMemoryCache(),

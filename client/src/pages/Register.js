@@ -1,16 +1,17 @@
 import { useState } from 'react';
+// import the mutation hook and gql tool to call a server side mutation
 import { useMutation, gql } from '@apollo/client';
 
-const REGISTER_USER = gql`
-  mutation Register($username: String!, $email: String!, $password: String!) {
-    register(username: $username, email: $email, password: $password) {
-      _id
-      username
-      email
-      blah
-    }
-  }
-`;
+// const REGISTER_USER = gql`
+//   mutation Register($username: String!, $email: String!, $password: String!) {
+//     register(username: $username, email: $email, password: $password) {
+//       _id
+//       username
+//       email
+//       blah
+//     }
+//   }
+// `;
 
 function Register({ setUser }) {
   const [formData, setFormData] = useState({
@@ -19,7 +20,7 @@ function Register({ setUser }) {
     password: ''
   });
   const [errorMessage, setErrorMessage] = useState('');
-  const [registerUser, { error }] = useMutation(REGISTER_USER);
+  // const [registerUser] = useMutation(REGISTER_USER);
 
   const handleInputChange = (e) => {
     const prop = e.target.name;
@@ -34,9 +35,9 @@ function Register({ setUser }) {
     e.preventDefault();
 
     try {
-      const { data: { register: user } } = await registerUser({
-        variables: formData
-      });
+      // const { data: { register: user } } = await registerUser({
+      //   variables: formData
+      // });
 
       setUser(user);
       setErrorMessage('');

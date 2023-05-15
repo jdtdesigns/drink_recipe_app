@@ -1,21 +1,21 @@
 require('dotenv').config();
+const express = require('express');
+const db = require('./config/connection');
+const session = require('express-session');
+
 const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@apollo/server/express4');
 const { ApolloServerPluginDrainHttpServer } = require('@apollo/server/plugin/drainHttpServer');
-const { readFileSync } = require('fs');
-const typeDefs = readFileSync('./schema/typeDefs.graphql', 'utf8');
-const resolvers = require('./schema/resolvers');
-const express = require('express');
 const http = require('http');
 const cors = require('cors');
-const db = require('./config/connection');
-const session = require('express-session');
+const { readFileSync } = require('fs');
+const resolvers = require('./schema/resolvers');
+const typeDefs = readFileSync('./schema/typeDefs.graphql', 'utf8');
 
 const app = express();
 const httpServer = http.createServer(app);
 
 const api_routes = require('./routes/api_routes');
-const auth_routes = require('./routes/auth_routes');
 const PORT = process.env.PORT || 3333;
 
 app.use(express.json());
@@ -30,7 +30,6 @@ app.use(session({
 }));
 
 app.use('/api', api_routes);
-app.use('/auth', auth_routes);
 
 async function startServer() {
   const server = new ApolloServer({
@@ -44,6 +43,8 @@ async function startServer() {
   app.use(
     '/',
     cors(),
+    // expressMiddleware accepts the same arguments:
+    // an Apollo Server instance and optional configuration options
     expressMiddleware(server, {
       context: async ({ req }) => ({ session: req.session }),
     }),
@@ -55,5 +56,6 @@ async function startServer() {
 db.once('open', async () => {
   await startServer();
 
-  console.log('Server started on port %s', PORT);
+  console.log('Express server running on port %s', PORT);
+  console.log('GraphQL server waiting at /graphql');
 });
