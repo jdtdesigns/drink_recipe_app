@@ -8,6 +8,12 @@ const resolvers = {
       return drinks;
     },
 
+    async getOneDrink(_, args, context) {
+      const drink = await Drink.findById(args.id).populate('user');
+
+      return drink;
+    },
+
     testQuery(_, args, context) {
       return args;
     }

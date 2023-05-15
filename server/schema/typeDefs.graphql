@@ -4,6 +4,7 @@ type User {
 }
 
 type Drink {
+  _id: ID
   name: String
   category: String
   ingredients: String
@@ -19,4 +20,5 @@ type TestQueryResponse {
 type Query {
   getDrinks: [Drink]
   testQuery(word: String!, number: Int!): TestQueryResponse
+  getOneDrink(id: ID!): Drink
 }
