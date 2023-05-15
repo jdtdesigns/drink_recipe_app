@@ -1,15 +1,11 @@
+const Drink = require('../models/Drink');
+
 const resolvers = {
   Query: {
-    hello() {
-      // Equivalent to res.send()
-      return 'hello from the back end!'
-    },
+    async getDrinks() {
+      const drinks = await Drink.find().populate('user');
 
-    someData() {
-      return {
-        name: 'JD',
-        age: 43
-      }
+      return drinks;
     }
   }
 };

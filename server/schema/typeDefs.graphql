@@ -1,9 +1,16 @@
-type Person {
+type User {
+  username: String
+  email: String
+}
+
+type Drink {
   name: String
-  age: Int
+  category: String
+  ingredients: String
+  instructions: String
+  user: User
 }
 
 type Query {
-  hello: String
-  someData: Person
+  getDrinks: [Drink]
 }
